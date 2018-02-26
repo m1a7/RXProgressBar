@@ -1,0 +1,22 @@
+{
+  "name": "RXProgressBar",
+  "version": "0.1.0",
+  "summary": "A short description of RXProgressBar.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/m1a7/RXProgressBar",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "m1a7": "thisismymail03@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/m1a7/RXProgressBar.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "RXProgressBar/Classes/**/*"
+}

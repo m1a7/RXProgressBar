@@ -1,0 +1,6 @@
+framework module RXProgressBar {
+  umbrella header "RXProgressBar-umbrella.h"
+
+  export *
+  module * { export * }
+}

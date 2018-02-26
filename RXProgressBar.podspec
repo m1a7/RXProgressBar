@@ -9,17 +9,12 @@
 Pod::Spec.new do |s|
   s.name             = 'RXProgressBar'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of RXProgressBar.'
+  s.summary          = 'RXProgress is an iOS (objective-c) implementation of a Web element known as “Progress Bar Step by Step”.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+s.description      = 'The library is an account Manager with cells.
+You can transfer the data models to the RXProgressBar after that, it will do all the work for you.'
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+
 
   s.homepage         = 'https://github.com/m1a7/RXProgressBar'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'

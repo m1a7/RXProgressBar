@@ -1,0 +1,23 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - RXProgressBar (0.1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - RXProgressBar (from `../`)
+
+EXTERNAL SOURCES:
+  RXProgressBar:
+    :path: ../
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  RXProgressBar: bf5ccd98d0de76d549652250d673ae138335d6d0
+
+PODFILE CHECKSUM: dea7ecbd89f151c19116572ea0570158e699142a
+
+COCOAPODS: 1.4.0.beta.2
