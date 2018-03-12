@@ -9,4 +9,15 @@
 
 @implementation RXInstructionImgModel
 
+
+- (instancetype)initWithURL:(NSString*) url andTitle:(NSString*) title
+{
+    self = [super init];
+    if (self) {
+        self.url = url;
+        self.title = title;
+    }
+    return self;
+}
+
 @end

@@ -12,18 +12,15 @@
 @implementation RXCollectionPB
 
 
-- (void) deleteProgressBar:(RXProgressBar*) bar
-{
+- (void) deleteProgressBar:(RXProgressBar*) bar{
     [self.pbArr removeObject: bar];
 }
 
-- (void) addPB:(RXProgressBar*) bar
-{
+- (void) addPB:(RXProgressBar*) bar{
     [self.pbArr addObject: bar];
 }
 
-- (instancetype)init
-{
+- (instancetype)init{
     self = [super init];
     if (self) {
         self.pbArr = [NSMutableArray new];

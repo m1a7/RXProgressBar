@@ -9,12 +9,31 @@
 
 @implementation RXCheckPoint
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.layer.drawsAsynchronously = YES;
+        self.layer.masksToBounds       = YES;
+        self.numberOfLines             = 1;
+        self.adjustsFontSizeToFitWidth = YES;
+        self.textAlignment = NSTextAlignmentCenter;
+    }
+    return self;
 }
-*/
+
+- (void) setFrame:(CGRect)frame {
+    [super setFrame:frame];
+
+    if (self.roundType == RXRoundSquard){
+        super.layer.cornerRadius  = CGRectGetHeight(frame)/6;
+    }
+    if (self.roundType == RXRoundCircle){
+        super.layer.cornerRadius  = CGRectGetHeight(frame)/2;
+    }
+}
+
+
 
 @end

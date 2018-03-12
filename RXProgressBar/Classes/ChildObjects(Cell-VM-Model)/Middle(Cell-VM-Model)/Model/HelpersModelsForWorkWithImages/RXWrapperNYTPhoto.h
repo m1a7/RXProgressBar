@@ -6,16 +6,16 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <NYTPhotoViewer/NYTPhoto.h>
 
 /*
- Объект обложка над NYTPhoto, нужна чтобы
- в ячейки RXMiddleCell при нажатии на фото,
- сформировать массив фото которые отвечают протоколу NYTPhoto.
- 
- Собственно создаем этот объект и настраиваем его.
-
+ Object cover over NYTPhoto, needed to
+ in rxmiddlecell cells when you click on a photo,
+ create an array of photos that meet the Protocol NYTPhoto.
+ Actually create this object and configure it.
 */
+
 @interface RXWrapperNYTPhoto : NSObject <NYTPhoto>
 
 // Redeclare all the properties as readwrite for sample/testing purposes.

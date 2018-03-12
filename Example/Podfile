@@ -2,10 +2,9 @@ use_frameworks!
 
 target 'RXProgressBar_Example' do
   pod 'RXProgressBar', :path => '../'
-
+  
   target 'RXProgressBar_Tests' do
     inherit! :search_paths
 
-    pod 'FBSnapshotTestCase'
   end
 end

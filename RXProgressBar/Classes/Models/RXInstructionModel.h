@@ -7,6 +7,17 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RXInstructionModel : NSObject
+#import "RXInstructionModelProtocol.h"
+
+@interface RXInstructionModel : NSObject <RXInstructionModelProtocol>
+
+@property (nonatomic, strong) NSString* instruction;
+@property (nonatomic, strong) NSArray<id< RXInstructionImgModelProtocol >>* imagesURL;
+
+- (instancetype)initWithInstruction:(NSString*) instruction
+                        withImgsURL:(NSArray<id<RXInstructionImgModelProtocol>>*)imgArr;
+
+- (instancetype)initWithInstruction:(NSString*) instruction
+                     withMixArrImgs:(NSArray*)imgArr;
 
 @end

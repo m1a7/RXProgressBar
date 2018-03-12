@@ -9,4 +9,6 @@
 
 @interface UITableViewCell (RelatedTable)
 
+- (UITableView *)relatedTable;
+
 @end

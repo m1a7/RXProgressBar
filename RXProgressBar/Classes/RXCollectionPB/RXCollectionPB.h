@@ -9,6 +9,10 @@
 
 @class RXProgressBar;
 
+/*
+This class is needed so that we can put an unlimited number of RXProgressBar in one uitableview
+And after with easy can, delete them or add next rxprogressBars
+*/
 @interface RXCollectionPB : NSObject
 
 @property(strong, nonatomic) NSMutableArray* pbArr;

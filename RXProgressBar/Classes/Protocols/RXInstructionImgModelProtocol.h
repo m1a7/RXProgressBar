@@ -14,7 +14,13 @@
 под фотографией. Подпись будет видна при открытии фотографии на полный экран с помощью фраемворка NYPhotoViewer.
  
  В свою очередь RXInstructionImgModelProtocol, поддерживает протокол RXExtendedImageProtocol фраемворка RXLayoutGallary.
+ =====
  
+ RXInstructionImgmodelprotocol Protocol.
+ This Protocol is needed in order to be able to support the signature (title / summary/credit)
+ under the photo. The signature will be visible when you open a photo to full screen using fraemwork NYPhotoViewer.
+ 
+ In turn RXInstructionImgModelProtocol, supporting Protocol RXExtendedImageProtocol fraemwork RXLayoutGallary.
 */
 @protocol RXInstructionImgModelProtocol <RXExtendedImageProtocol>
 

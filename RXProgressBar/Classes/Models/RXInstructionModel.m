@@ -9,4 +9,25 @@
 
 @implementation RXInstructionModel
 
+- (instancetype)initWithInstruction:(NSString*) instruction withImgsURL:(NSArray<id<RXInstructionImgModelProtocol>>*)imgArr
+{
+    self = [super init];
+    if (self) {
+        self.instruction = instruction;
+        self.imagesURL   = [NSArray arrayWithArray:imgArr];
+    }
+    return self;
+}
+
+- (instancetype)initWithInstruction:(NSString*) instruction withMixArrImgs:(NSArray*)imgArr
+{
+    self = [super init];
+    if (self) {
+        self.instruction = instruction;
+        self.imagesURL   = [NSArray arrayWithArray:imgArr];
+    }
+    return self;
+}
+
+
 @end

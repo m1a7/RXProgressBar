@@ -1,13 +1,27 @@
 PODS:
-  - FBSnapshotTestCase (2.1.4):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
-  - FBSnapshotTestCase/Core (2.1.4)
-  - FBSnapshotTestCase/SwiftSupport (2.1.4):
-    - FBSnapshotTestCase/Core
-  - RXProgressBar (0.1.0)
+  - FLAnimatedImage (1.0.12)
+  - NYTPhotoViewer (2.0.0):
+    - NYTPhotoViewer/AnimatedGifSupport (= 2.0.0)
+    - NYTPhotoViewer/Core (= 2.0.0)
+  - NYTPhotoViewer/AnimatedGifSupport (2.0.0):
+    - FLAnimatedImage (~> 1.0.12)
+    - NYTPhotoViewer/Core
+  - NYTPhotoViewer/Core (2.0.0)
+  - RXLayoutGallary (1.1.2):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage (~> 4.0)
+    - SDWebImage/GIF
+  - RXProgressBar (0.1.0):
+    - NYTPhotoViewer
+    - RXLayoutGallary (~> 1.1.2)
+  - SDWebImage (4.3.3):
+    - SDWebImage/Core (= 4.3.3)
+  - SDWebImage/Core (4.3.3)
+  - SDWebImage/GIF (4.3.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
 
 DEPENDENCIES:
-  - FBSnapshotTestCase
   - RXProgressBar (from `../`)
 
 EXTERNAL SOURCES:
@@ -15,9 +29,12 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  RXProgressBar: bf5ccd98d0de76d549652250d673ae138335d6d0
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
+  RXLayoutGallary: 08c38ce219a00563594b7a11941420ea9d46f4a4
+  RXProgressBar: ce7a1fd5fa054e031365d8ed8b28465efe76b2ec
+  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
 
-PODFILE CHECKSUM: dea7ecbd89f151c19116572ea0570158e699142a
+PODFILE CHECKSUM: 3025b3317db1ca3b1a770fbe8cc6ee912de1ef2d
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.4.0

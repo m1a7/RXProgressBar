@@ -6,30 +6,32 @@
 //
 
 #import "RXBaseCell.h"
-#import <RXLayoutGallary/RXLayoutGallary.h>
-
-// ViewModel
+// Cell's ViewModel
 #import "RXMiddleViewModelCell.h"
 
-// Model for NYTPhotoViewController
-#import <NYTPhotoViewer/NYTPhotosViewController.h>
-
+// Thrid-Party Fraemwork
+#import <RXLayoutGallary/RXLayoutGallary.h>
 
 @interface RXMiddleCell : RXBaseCell <RXLayoutGallaryDelegate>
 
-// ViewModel
-@property(weak, nonatomic) RXMiddleViewModelCell* vm_cell;
+@property(weak, nonatomic) RXMiddleViewModelCell* vm_cell; // Cell's ViewModel
 
-// UI property
+// UI properties
 @property(strong, nonatomic) UILabel         *instructionLabel;
 @property(strong, nonatomic) RXLayoutGallary *photoGallary;
 
 
-
+// Init method
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
-+ (CGFloat) calculateHeightByUIConfig:(NSObject*) conf withVM:(RXMiddleViewModelCell*) vm withWidthView:(CGFloat)width;
+// Calculate height of cell
++ (CGFloat) calculateHeightByUIConfig:(RXUIConfig*) config
+                               withVM:(id<RXBaseViewModelCellProtocol>) vm
+                   withSuperViewWidth:(CGFloat)width;
 
+// Cancel all nsoperation
+#warning Исправить название
+- (void) cancelAllRequest;
 
 
 @end

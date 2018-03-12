@@ -15,66 +15,102 @@ typedef enum ProgressBarStyle {
     RXProgressBarStyle2,
     RXProgressBarStyle3,
     RXProgressBarStyle4,
-    RXProgressBarStyle5
+    RXProgressBarStyle5,
+    RXProgressBarCustomStyle
     
 } RXProgressBarStyle;
 
 
+typedef enum  degreeOfCurvatureCheckPoint {
+   RXRoundCircle,
+   RXRoundSquard
+} RXRoundDegree;
+
+
 @interface RXUIConfig : NSObject
 
-/*
-@property (assign, nonatomic) float
-@property (strong, nonatomic) UIColor*
-@property (strong, nonatomic) UIFont*
-@property (strong, nonatomic) UIImage*
-*/
 
+// Init method with ui style with one of the list RXProgressBarStyle
+- (instancetype) initConfigWithStyle:(RXProgressBarStyle) style;
+
+// Init method with custom ui style
+- (instancetype) initConfigWithCustomStyle:(void (^)(RXUIConfig* config))setCustomStyleBlock;
+
+
+// General property
 @property (assign, nonatomic) RXProgressBarStyle pbStyle;
+@property (assign, nonatomic) float standartOffSetBetweenUIComponents;
 
-@property (assign, nonatomic) float percentOnScreenForVerticaLineAndCheckPoint;
-@property (assign, nonatomic) float percentOnScreenForMainLabelAndPhotoGallary;
+@property (assign, nonatomic) float widthPercentCheckPointAndLine;
+@property (assign, nonatomic) float widthPercentInstructionAndGallary;
 
-@property (strong, nonatomic) UIColor* doneCheckPointColor;
-@property (strong, nonatomic) UIColor* inProcessCheckPointColor;
-@property (strong, nonatomic) UIColor* inWaitingCheckPointColor;
 
-@property (strong, nonatomic) UIColor* doneLineColor;
-@property (strong, nonatomic) UIColor* inProcessLineColor;
-@property (strong, nonatomic) UIColor* lineColor;
+// Font for "InstructionLabel"
+@property (strong, nonatomic) UIFont* mainLabelFont;
+@property (strong, nonatomic) UIColor* mainLabelFontColor;
 
-@property (strong, nonatomic) UIColor* doneCheckPointBorderColor;
-@property (strong, nonatomic) UIColor* inProcessCheckPointBorderColor;
-@property (strong, nonatomic) UIColor* inWaitingCheckPointBorderColor;
-@property (strong, nonatomic) UIColor* checkPointBorderColor;
+// Color for BackgroundColor Cell
+@property (strong, nonatomic) UIColor* backgroundColorForCell;
+@property (strong, nonatomic) UIColor* backgroundColorForDoneCell;
+@property (strong, nonatomic) UIColor* backgroundColorForProcessCell;
+@property (strong, nonatomic) UIColor* backgroundColorForWaitingCell;
 
-@property (assign, nonatomic) float borderWidthDoneCheckPoint;
-@property (assign, nonatomic) float borderWidthInProcessCheckPoint;
-@property (assign, nonatomic) float borderWidthInWaitingCheckPoint;
-@property (assign, nonatomic) float borderWidth;
 
-@property (assign, nonatomic) float cornerRadiusCheckPoint;
-
-@property (assign, nonatomic) float offsetFromTopForLine;
-@property (assign, nonatomic) float offsetFromBottomForLine;
-
-@property (strong, nonatomic) UIFont* doneCheckPointFont;
-@property (strong, nonatomic) UIFont* inProcessCheckPointFont;
-@property (strong, nonatomic) UIFont* inWaitingCheckPointFont;
-@property (strong, nonatomic) UIFont* checkPointFont;
-
-@property (strong, nonatomic) UIImage* doneCheckPointImage;
-@property (strong, nonatomic) UIImage* inWaitingCheckPointImage;
-@property (strong, nonatomic) UIImage* inProcessCheckPointImage;
-@property (strong, nonatomic) UIImage* checkPointImage;
-
-@property (assign, nonatomic) float customBeginCellHeight;
-@property (assign, nonatomic) float customEndCellHeight;
-
+// Standart Height for Begin & End Cells
 @property (assign, nonatomic) float standartBeginCellHeight;
 @property (assign, nonatomic) float standartEndCellHeight;
 
-@property (strong, nonatomic) UIFont* mainLabelFont;
-@property (strong, nonatomic) UIColor* backgroundColorForCell;
+// Custom Height for Begin & End Cells
+@property (assign, nonatomic) float customBeginCellHeight;
+@property (assign, nonatomic) float customEndCellHeight;
+
+// CheckPoint - Done State
+@property (strong, nonatomic) UIColor* doneCheckPointBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* doneCheckPointBorderColor;      // Color Border
+@property (assign, nonatomic) float    doneCheckPointBorderWidth;      // Width Border
+@property (strong, nonatomic) UIFont*  doneCheckPointFont;             // Font
+@property (strong, nonatomic) UIColor* doneCheckPointFontColor;        // Font Color
+@property (strong, nonatomic) UIImage* doneCheckPointImage;            // UIImage
+
+// CheckPoint - InProcess State
+@property (strong, nonatomic) UIColor* inProcessCheckPointBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* inProcessCheckPointBorderColor;      // Color Border
+@property (assign, nonatomic) float    inProcessCheckPointBorderWidth;      // Width Border
+@property (strong, nonatomic) UIFont*  inProcessCheckPointFont;             // Font
+@property (strong, nonatomic) UIColor*  inProcessCheckPointFontColor;       // Font Color
+@property (strong, nonatomic) UIImage* inProcessCheckPointImage;            // UIImage
+
+// CheckPoint - InWaiting State
+@property (strong, nonatomic) UIColor* inWaitingCheckPointBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* inWaitingCheckPointBorderColor;      // Color Border
+@property (assign, nonatomic) float    inWaitingCheckPointBorderWidth;      // Width Border
+@property (strong, nonatomic) UIFont*  inWaitingCheckPointFont;             // Font
+@property (strong, nonatomic) UIColor* inWaitingCheckPointFontColor;       // Font Color
+@property (strong, nonatomic) UIImage* inWaitingCheckPointImage;            // UIImage
+
+// Shared properties for CheckPoint
+@property (assign, nonatomic) RXRoundDegree checkPointRoundDegree;
+
+
+// LineColor - Done State
+@property (strong, nonatomic) UIColor* doneLineColorBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* doneLineColorBorderColor;      // Color Border
+@property (assign, nonatomic) float    doneLineColorBorderWidth;      // Width Border
+
+// LineColor - InProcess State
+@property (strong, nonatomic) UIColor* inProcessLineColorBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* inProcessLineColorBorderColor;      // Color Border
+@property (assign, nonatomic) float    inProcessLineColorBorderWidth;      // Width Border
+
+// LineColor - InWaiting State
+@property (strong, nonatomic) UIColor* inWaitingLineColorBackgroundColor;  // Background Color
+@property (strong, nonatomic) UIColor* inWaitingLineColorBorderColor;      // Color Border
+@property (assign, nonatomic) float    inWaitingLineColorBorderWidth;      // Width Border
+
+// Shared properties for LineColor
+// LineCololr Top & Bottom offset
+@property (assign, nonatomic) float percentOffsetFromTop;
+@property (assign, nonatomic) float percentOffsetFromBottom;
 
 
 @end

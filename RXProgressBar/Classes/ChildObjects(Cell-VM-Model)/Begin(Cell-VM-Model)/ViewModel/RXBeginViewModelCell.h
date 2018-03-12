@@ -8,22 +8,20 @@
 #import "RXBaseViewModelCell.h"
 // Cell Model
 #import "RXBeginCellModel.h"
-// Protocol
-#import "RXInstructionModelProtocol.h"
 
 @class RXProgressBar;
+
+
 @interface RXBeginViewModelCell : RXBaseViewModelCell
 
-@property (weak, nonatomic)RXProgressBar* progressBar;
+@property (strong, nonatomic) RXBeginCellModel* model_cell; // Model
 
- - (void) deleteRow;
- - (void) deleteAllRowsAtProgressBar;
- - (float)getTotalHeightWithOffset:(float) offset;
+-(instancetype) initWithModel:(id<RXBaseCellModelProtocol>) model withProgressBar:(RXProgressBar*) pb;
 
-// Model
-@property (strong, nonatomic) RXBeginCellModel* model_cell;
-
--(instancetype) initWithModel:(id<RXInstructionModelProtocol>) model withProgressBar:(RXProgressBar*) pb;
+/*
+ Get total height of cell with all offset between uicomponents
+*/
+-(float) getTotalHeightWithOffset:(float) offset;
 
 @end
 

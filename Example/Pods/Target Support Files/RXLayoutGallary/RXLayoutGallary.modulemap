@@ -1,0 +1,6 @@
+framework module RXLayoutGallary {
+  umbrella header "RXLayoutGallary-umbrella.h"
+
+  export *
+  module * { export * }
+}

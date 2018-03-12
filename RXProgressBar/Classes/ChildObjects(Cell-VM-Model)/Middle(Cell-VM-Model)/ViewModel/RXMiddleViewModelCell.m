@@ -11,44 +11,32 @@
 
 @implementation RXMiddleViewModelCell
 
-- (void) deleteRow {
-    [self.progressBar deleteRow: self];
-}
-
-- (void) deleteAllRowsAtProgressBar {
-    [self.progressBar deleteProgressBar];
-}
-
-- (float) getTotalHeightWithOffset:(float) offset {
-    return 1.f;
-}
-
-
-- (instancetype)initWithModel:(id< RXInstructionModelProtocol>) model  withProgressBar:(RXProgressBar*) pb
+- (instancetype)initWithModel:(id<RXInstructionModelProtocol>) model  withProgressBar:(RXProgressBar*) pb
 {
     self = [super init];
     if (self) {
-        //self.model = [[RXMiddleCellModel alloc] init];
-        //self.model.instruction = model.instruction;
-        //self.model.imagesURL = [NSArray arrayWithArray:model.imagesURL];
-        self.model_cell = model;
+        
+        self.model_cell = [[RXMiddleCellModel alloc] init];
+        if (model){
+            self.model_cell.instruction = model.instruction;
+            self.model_cell.imagesURL   = model.imagesURL;
+        }
+        
         self.progressBar = pb;
         
-        self.imageOperationQueue = [[NSOperationQueue alloc]init];
+        self.imageOperationQueue = [NSOperationQueue mainQueue];
         self.imageOperationQueue.maxConcurrentOperationCount = 5;
-        self.imageCache = [[NSCache alloc] init];
+        self.arrConnection = [NSMutableArray new];
     }
     return self;
 }
 
-- (float) getTotalHeightWithOffsets:(float) offset
+- (float) getTotalHeightWithOffset:(float) offset
 {
-    //float offset  = 20.f;
     float totalHeight = 0;
     totalHeight += offset;
     
-    if (self.height_InstructionLabel > 0)
-    {
+    if (self.height_InstructionLabel > 0){
         totalHeight += self.height_InstructionLabel;
         totalHeight += offset;
     }
@@ -56,6 +44,16 @@
         totalHeight += self.height_PhotoGallary;
         totalHeight += offset;
     }
-    return roundf(totalHeight);
+    
+    return MAX(roundf([self totalHeighOfVerticalLine:offset]),  roundf(totalHeight));
 }
+
+- (float) totalHeighOfVerticalLine:(float) offset {
+    
+    NSAssert(offset>=0, @"OffSet в totalHeighOfVerticalLine equal to zero! (Error in calculating the height of the cell)");
+    NSAssert(self.height_CheckPoint >= 0, @"self.height_CheckPoint  в totalHeighOfVerticalLine  equal to zero");
+    return offset + self.height_CheckPoint + offset;
+}
+
+
 @end

@@ -7,6 +7,11 @@
 
 #import <UIKit/UIKit.h>
 
+// UIConfig
+#import "RXUIConfig.h"
+
 @interface RXCheckPoint : UILabel
+
+@property (nonatomic, assign) RXRoundDegree roundType;
 
 @end

@@ -6,15 +6,12 @@
 //
 
 #import "RXBaseViewModelCell.h"
-
 // Model
 #import "RXMiddleCellModel.h"
 
 @class RXProgressBar;
 
 @interface RXMiddleViewModelCell : RXBaseViewModelCell
-
-@property(weak, nonatomic) RXProgressBar* progressBar;
 
 @property(strong, nonatomic) RXMiddleCellModel* model_cell;
 
@@ -28,18 +25,11 @@
 @property(assign, nonatomic) float height_PhotoGallary;
 @property(assign, nonatomic) float width_PhotoGallary;
 
-@property(assign, nonatomic) float actualCalculationsForWidth;
-
-@property(strong, nonatomic) NSOperationQueue *imageOperationQueue;
-@property(strong, nonatomic) NSCache *imageCache;
-
-
- - (void) deleteRow;
- - (void) deleteAllRowsAtProgressBar;
- - (float) getTotalHeightWithOffset:(float) offset;
- 
+// These properties need for optimized work with tableview
+@property (nonatomic, strong) NSMutableArray<NSURLSessionDownloadTask*>* arrConnection;
+@property (nonatomic, strong) NSOperationQueue *imageOperationQueue;
+@property (nonatomic,  weak)  NSCache* imageCache;
 
 -(instancetype) initWithModel:(id<RXInstructionModelProtocol>) model withProgressBar:(RXProgressBar*) pb;
-
 
 @end

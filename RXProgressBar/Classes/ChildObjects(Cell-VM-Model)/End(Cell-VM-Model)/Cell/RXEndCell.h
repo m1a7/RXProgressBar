@@ -7,26 +7,18 @@
 
 #import "RXBaseCell.h"
 
-// ViewModel Cell
-#import "RXEndViewModelCell.h"
-
+// Cell's ViewModel
+@class RXEndViewModelCell;
 // UI Config
-#import "RXUIConfig.h"
+@class RXUIConfig;
+
 
 @interface RXEndCell : RXBaseCell
 
-// ViewModel Cell
-@property(weak, nonatomic) RXEndViewModelCell* vm_cell;
-
-// UI property
-@property(strong,nonatomic) UILabel* checkPoint;
-@property(strong,nonatomic) UIView* verticalLine;
+@property(weak, nonatomic) RXEndViewModelCell* vm_cell; // Cell's ViewModel
 
 // Calculate height
- + (CGFloat) calculateHeightByUIConfig:(RXUIConfig*) config  withVM:(RXEndViewModelCell*) vm withSuperViewWidth:(CGFloat)width;
-
-- (void) initVerticalLineAndCheckPoint:(RXEndViewModelCell*)vm;
-- (void) setInNilAllComponent;
-
-
++ (CGFloat) calculateHeightByUIConfig:(RXUIConfig*) config
+                               withVM:(id<RXBaseViewModelCellProtocol>) vm
+                   withSuperViewWidth:(CGFloat)width;
 @end

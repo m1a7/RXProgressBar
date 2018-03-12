@@ -19,6 +19,31 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'RXProgressBar'
 ```
+## RXProgressBar
+The library is an account Manager with cells. You can transfer the data models which confrom  "RXInstructionModelProtocol" protocol to the RXProgressBar after that, it will do all the work for you.
+Object which conform this protocol, must have next properties:
+
+```json
+    {
+        instruction : "Wash the pumpkin",
+            images : [
+                        {
+                        "url"     : "https:///site.com/1.jpg",
+                        "title"   : "Pumplin ",
+                        "summary" : "it should be bright",
+                        "credit"  : "Wash and wipe the pumpkin dry"
+                        },
+
+                        {
+                        "url"     : "https:///site.com/2.jpg",
+                        "title"   : "Pumplin ",
+                        "summary" : "it should be bright",
+                        "credit"  : "Wash and wipe the pumpkin dry"
+                        }
+                     ]
+        }
+```
+
 
 ## Author
 

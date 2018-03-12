@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+// Protocols
+#import <RXProgressBar/RXInstructionModelProtocol.h>
+
+
 @interface DataBuilder : NSObject
+
+
++ (NSArray<id<RXInstructionModelProtocol>>*) createPumkinInstruction;
+
++ (NSArray<id<RXInstructionModelProtocol>>*) createTomAndJerryInstruction;
 
 @end

@@ -8,181 +8,73 @@
 #import "RXMiddleCell.h"
 
 #import "RXWrapperNYTPhoto.h"
-#import <FLAnimatedImage/FLAnimatedImage.h>
 
-#define offset 15.f
+// Thrid-party fraemwork
+#import <FLAnimatedImage/FLAnimatedImage.h>
+#import <NYTPhotoViewer/NYTPhotosViewController.h>
+#import <NYTPhotoViewer/NYTPhotoViewerArrayDataSource.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIImage+GIF.h>
+
+#import "RXUIConfig.h"
+#import "RXBeforeLine.h"
+#import "RXAfterLine.h"
 
 @interface RXMiddleCell () <NYTPhotosViewControllerDelegate, NYTPhotoViewerDataSource>
 
 // Private properties for NYTPhotoViewer
 @property(strong, nonatomic) NSMutableArray<RXWrapperNYTPhoto*>* imageForNYTPhotosVC;
-@property(strong, nonatomic) NSNumber *numberOfPhotos;
+@property(strong, nonatomic) NSNumber    *numberOfPhotos;
 @property(strong, nonatomic) UIImageView *touchedImgView;
 
 @end
 
-
-
 @implementation RXMiddleCell
 
+#pragma mark - Standart UITableViewCell methods
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    NSLog(@"- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier");
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // [self initUIComponents];
     }
     return self;
 }
 
-#pragma mark - Setter
-- (void) setVm_cell:(RXMiddleViewModelCell *)vm_cell{
-    _vm_cell = vm_cell;
-    [self setDataToCell];
-}
-
-- (void) setDataToCell {
-    __weak RXMiddleCell* bself = self;
-    CGFloat width =CGRectGetWidth(bself.contentView.frame);
-    [bself setInNilAllComponent];
-    [bself initUIComponentsWithVM:bself.vm_cell];
-    
-    
-    if (bself.vm_cell.model_cell.instruction.length > 0)
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    if (selected)
     {
-        if (bself.vm_cell.height_InstructionLabel <= 0)
-        {
-#warning Пофиксить ширифт их UIConfig
-            bself.vm_cell.height_InstructionLabel =  [RXMiddleCell heigtForCellwithString: _vm_cell.model_cell.instruction
-                                                                                 withFont: [UIFont fontWithName:@"Arial" size:12.0f]
-                                                                           withWidthLabel: ((width/100)*95)-offset*2].height;
+    if ([self.vm_cell statusCellInProcess])
+    {
+        NSInteger idxInArr = [self.vm_cell.progressBar.allViewModels
+                              indexOfObject:self.vm_cell];
+        
+        if (!self.vm_cell.progressBar.addAdditionalBeginAndEndCells){
+            idxInArr +=1;
         }
-        [bself setDataToInstructionLabel];
+        [self makeThisCellIsDoneStatus:self.vm_cell
+                     andFrameSuperView:self.contentView.frame
+                       andIndexInArray:idxInArr];
+        [self makeNextCellIsInProcessingStatus:self.vm_cell
+                             andFrameSuperView:self.contentView.frame
+                               andIndexInArray:idxInArr];
     }
-    
-    if (bself.vm_cell.model_cell.imagesURL.count > 0)
-    {
-        if (bself.vm_cell.height_PhotoGallary <= 0)
-        {
-            bself.vm_cell.height_PhotoGallary = [RXMiddleCell rectForPhotoGallary:CGRectMake(0, 0, width, 0)
-                                                           heightInstructionLabel: bself.vm_cell.height_InstructionLabel].size.height;
-        }
-        [bself setDataToPhotoGallary];
-    }
-    
-    if (self.vm_cell.actualCalculationsForWidth == width)
-    {
-        [self setFramesSettingFromVMtoSubviews];
-    }
+   }
 }
 
-
-#pragma mark - Calculate Height
-
-+ (CGFloat) calculateHeightByUIConfig:(NSObject*) conf withVM:(RXMiddleViewModelCell*) vm withWidthView:(CGFloat)width
-{
-    if ((vm.model_cell.instruction.length <= 0 && vm.model_cell.imagesURL.count <= 0)
-        ||
-        (!vm.model_cell.instruction && !vm.model_cell.imagesURL))
-    {
-        return 40.f;
-    }
-    
-    if (vm.model_cell.instruction.length > 0)
-    {
-        if (vm.height_InstructionLabel <= 0 || vm.actualCalculationsForWidth != width)
-        {
-#warning Пофиксить ширифт их UIConfig
-            vm.height_InstructionLabel = [RXMiddleCell heigtForCellwithString: vm.model_cell.instruction
-                                                                     withFont: [UIFont fontWithName:@"Arial" size:12.0f]
-                                                               withWidthLabel:  ((width/100)*95)-offset*2].height;
-        }
-    }
-    
-    if (vm.model_cell.imagesURL.count > 0)
-    {
-        if (vm.height_PhotoGallary <= 0 || vm.actualCalculationsForWidth != width)
-        {
-            vm.height_PhotoGallary      =  [RXMiddleCell rectForPhotoGallary:CGRectMake(0, 0, width, 0)
-                                                      heightInstructionLabel:vm.height_InstructionLabel].size.height;
-        }
-    }
-    return [vm getTotalHeightWithOffset:offset];
-}
-
-
-
-#pragma mark - Init and Add to self.contentView UIComponents
-- (void) initUIComponentsWithVM:(RXMiddleViewModelCell*)vm
-{
-    self.contentView.backgroundColor = [UIColor greenColor];
-    if (vm.model_cell.instruction.length > 0)
-    {
-        self.instructionLabel           = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, 0, 0)];
-        [self setupInstructionLabel];
-        [self.contentView addSubview:self.instructionLabel];
-    }
-    // Тут нужно  делать проверку, если есть в массиве объекты то добавляем
-    if (vm.model_cell.imagesURL.count > 0)
-    {
-        self.photoGallary        = [[RXLayoutGallary alloc] initWithFrame:CGRectMake(0, 0, 0, 0) andDelegate:self];
-        [self setupPhotoGallary];
-        [self.contentView addSubview:self.photoGallary];
-    }
-}
-
-+(CGSize)heigtForCellwithString:(NSString *)stringValue withFont:(UIFont*)font withWidthLabel:(CGFloat)width{
-    CGSize constraint = CGSizeMake( roundf(width),9999);
-    NSDictionary *attributes = @{NSFontAttributeName: font};
-    CGRect rect = [stringValue boundingRectWithSize:constraint
-                                            options:         (NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                         attributes:attributes
-                                            context:nil];
-    return CGSizeMake(roundf(rect.size.width), roundf(rect.size.height));
-}
+#pragma mark - Layout/Resize subview
 
 -(void) layoutSubviews{
     [super layoutSubviews];
-    [self resizeSubviews];
-}
-
-
-- (void) setInNilAllComponent
-{
-    for (UIView* subView in self.contentView.subviews) {
-        [subView removeFromSuperview];
-    }
-    self.instructionLabel = nil;
-    self.photoGallary = nil;
-}
-
-
-- (void) reloadTabelView
-{
-    UITableView *parentTable = (UITableView *)self.superview;
-    if (![parentTable isKindOfClass:[UITableView class]]) {
-        parentTable = (UITableView *) parentTable.superview;
-    }
-    [parentTable reloadData];
-}
-
-- (void) setFramesSettingFromVMtoSubviews
-{
-    self.instructionLabel.frame = CGRectMake(_vm_cell.x_InstructionLabel,
-                                             _vm_cell.y_InstructionLabel,
-                                             _vm_cell.width_InstructionLabel,
-                                             _vm_cell.height_InstructionLabel);
-    self.photoGallary.frame     =  CGRectMake(_vm_cell.x_PhotoGallary,
-                                              _vm_cell.y_PhotoGallary,
-                                              _vm_cell.width_PhotoGallary,
-                                              _vm_cell.height_PhotoGallary);
+    [self  resizeSubviews];
 }
 
 - (void) resizeSubviews
 {
-    if ( self.vm_cell.actualCalculationsForWidth != self.contentView.frame.size.width)
+    if    ((self.vm_cell.actualCalculationsForWidth != self.contentView.frame.size.width)
+        || (self.vm_cell.actualCalculationsForHeight != self.contentView.frame.size.height))
     {
+
         if (self.vm_cell.model_cell.instruction.length > 0)
         {
             self.instructionLabel.frame = [self rectForInstructionLabel:self.contentView.frame];
@@ -193,27 +85,264 @@
         }
         if (self.vm_cell.model_cell.imagesURL.count > 0)
         {
-            self.photoGallary.frame     = [RXMiddleCell rectForPhotoGallary:self.contentView.frame
-                                                     heightInstructionLabel:CGRectGetHeight(self.instructionLabel.frame)];
+            self.photoGallary.frame = [RXMiddleCell rectForPhotoGallary:self.contentView.frame
+                                                                withVM:self.vm_cell
+                                                heightInstructionLabel:CGRectGetHeight(self.instructionLabel.frame)];
+            
             _vm_cell.x_PhotoGallary      = self.photoGallary.frame.origin.x;
             _vm_cell.y_PhotoGallary      = self.photoGallary.frame.origin.y;
             _vm_cell.width_PhotoGallary  = self.photoGallary.frame.size.width;
             _vm_cell.height_PhotoGallary = self.photoGallary.frame.size.height;
         }
-        self.vm_cell.actualCalculationsForWidth = CGRectGetWidth(self.contentView.frame);
+        
+        
+        if ( self.checkPoint){
+            self.checkPoint.frame  = [RXBaseCell cgrectMiddleCellCheckPoint:self.vm_cell andFrameSuperView:self.contentView.frame];
+             self.vm_cell.height_CheckPoint = CGRectGetHeight(self.checkPoint.frame);
+        }
+     
+        if (self.lineBeforePoint){
+            self.lineBeforePoint.frame = [self cgrectMiddleCellBeforeLine:self.vm_cell andFrameSuperView:self.contentView.frame];
+        }
+        if (self.lineAfterPoint){
+            self.lineAfterPoint.frame  = [self cgrectMiddleCellAfterLine:self.vm_cell  andFrameSuperView:self.contentView.frame];
+        }
+   
+        self.vm_cell.actualCalculationsForWidth  = CGRectGetWidth(self.contentView.frame);
+        self.vm_cell.actualCalculationsForHeight = CGRectGetHeight(self.contentView.frame);
+    }
+}
+
+#pragma mark - UI methods
+
+- (void) initUIComponentsWithVM:(RXMiddleViewModelCell*)vm
+{
+    NSInteger idxInArr = [self.vm_cell.progressBar.allViewModels indexOfObject:self.vm_cell];
+ 
+    if (!self.vm_cell.progressBar.addAdditionalBeginAndEndCells){
+        idxInArr +=1;
+    }
+    [self initVerticalLineAndCheckPoint:vm andFrameSuperView:self.contentView.frame andIndexInArray:idxInArr];
+    
+    if (vm.model_cell.instruction.length > 0)
+    {
+        self.instructionLabel   = [[UILabel alloc] init];
+        [self setupInstructionLabel];
+        [self.contentView addSubview:self.instructionLabel];
+    }
+    if (vm.model_cell.imagesURL.count > 0)
+    {
+        self.photoGallary  = [[RXLayoutGallary alloc] initWithFrame:CGRectMake(0, 0, 0, 0) andDelegate:self];
+        [self setupPhotoGallary];
+        [self.contentView addSubview:self.photoGallary];
+    }
+    
+    for (UIView* subView in self.contentView.subviews) {
+        subView.layer.drawsAsynchronously = YES;
+    }
+}
+
+- (void) setInNilAllComponent
+{
+#warning изменить название
+    [self cancelAllRequest];
+    
+    for (UIView* subView in self.contentView.subviews) {
+        [subView removeFromSuperview];
+    }
+    
+    for (id subview in self.photoGallary.subviews) {
+        if ([subview isKindOfClass:[FLAnimatedImageView class]])
+        {
+            FLAnimatedImageView* convertSubview = (FLAnimatedImageView*)subview;
+            [convertSubview stopAnimating];
+            convertSubview.animatedImage = nil;
+            [convertSubview removeFromSuperview];
+            convertSubview = nil;
+        }
+          #warning потом затестить
+        //[self.photoGallary removeAllImageFromGallary];
+    }
+        
+    self.instructionLabel = nil;
+    self.photoGallary    = nil;
+    self.checkPoint      = nil;
+    self.lineBeforePoint = nil;
+    self.lineAfterPoint  = nil;
+}
+
+
+#pragma mark -  Setter for ViewModel
+- (void) setVm_cell:(RXMiddleViewModelCell *)vm_cell{
+    _vm_cell = vm_cell;
+    [self setDataToCell];
+}
+
+- (void) setDataToCell {
+
+    __weak RXMiddleCell* bself = self;
+    CGFloat width =CGRectGetWidth(bself.contentView.frame);
+    CGFloat height =CGRectGetHeight(bself.contentView.frame);
+
+    [bself setInNilAllComponent];
+    [bself initUIComponentsWithVM:bself.vm_cell];
+    
+    if (bself.vm_cell.model_cell.instruction.length > 0){
+      
+        if (bself.vm_cell.height_InstructionLabel <= 0) {
+            bself.vm_cell.height_InstructionLabel =  [RXMiddleCell heigtForCellwithString: _vm_cell.model_cell.instruction
+                                                                                 withFont: self.vm_cell.progressBar.configUI.mainLabelFont
+                                                                           withWidthLabel: ((width/100)*bself.vm_cell.progressBar.configUI.widthPercentInstructionAndGallary)- bself.vm_cell.progressBar.configUI.standartOffSetBetweenUIComponents*2].height;
+        }
+        [bself setDataToInstructionLabel];
+    }
+    
+    if (bself.vm_cell.model_cell.imagesURL.count > 0) {
+        
+        if (bself.vm_cell.height_PhotoGallary <= 0){
+            bself.vm_cell.height_PhotoGallary = [RXMiddleCell rectForPhotoGallary:CGRectMake(0, 0, width, 0)
+                                                                           withVM:bself.vm_cell
+                                                           heightInstructionLabel: bself.vm_cell.height_InstructionLabel].size.height;
+        }
+        [bself setDataToPhotoGallary];
+    }
+    
+    
+    if (self.vm_cell.actualCalculationsForWidth == width &&  self.vm_cell.actualCalculationsForHeight == height){
+       [self setFramesSettingFromVMtoSubviews];
+    }
+}
+
+- (void) setFramesSettingFromVMtoSubviews
+{
+    self.instructionLabel.frame = CGRectMake(_vm_cell.x_InstructionLabel,
+                                             _vm_cell.y_InstructionLabel,
+                                             _vm_cell.width_InstructionLabel,
+                                             _vm_cell.height_InstructionLabel);
+    
+    self.photoGallary.frame     =  CGRectMake(_vm_cell.x_PhotoGallary,
+                                              _vm_cell.y_PhotoGallary,
+                                              _vm_cell.width_PhotoGallary,
+                                              _vm_cell.height_PhotoGallary);
+}
+
+#pragma mark - Setup UI Components
+
+- (void) setupInstructionLabel
+{
+    if (self.instructionLabel){
+        self.instructionLabel.numberOfLines   = 0;
+        self.instructionLabel.textColor       = [UIColor whiteColor];
+        self.instructionLabel.font            = self.vm_cell.progressBar.configUI.mainLabelFont;
+        self.instructionLabel.textColor       = self.vm_cell.progressBar.configUI.mainLabelFontColor;
+        self.instructionLabel.backgroundColor = self.vm_cell.progressBar.configUI.backgroundColorForCell;
+    } else {
+        NSLog(@"Attempt to initialize component which is equal nil : instructionLabel");
+    }
+}
+
+- (void) setupPhotoGallary{
+    if (self.photoGallary){
+        self.photoGallary.backgroundColor = self.vm_cell.progressBar.configUI.backgroundColorForCell;
+    } else {
+        NSLog(@"Attempt to initialize component which is equal nil : photoGallary");
+    }
+}
+
+#pragma mark - Set data to UI Components
+
+-(void) setDataToInstructionLabel{
+    if (self.instructionLabel && self.vm_cell.model_cell.instruction){
+        self.instructionLabel.text = self.vm_cell.model_cell.instruction;
+    } else {
+        NSLog(@"Attempt to set data. component which is equal nil : self.instructionLabel");
+    }
+}
+
+-(void) setDataToPhotoGallary{
+    if (self.photoGallary && self.vm_cell.model_cell.imagesURL.count > 0){
+        [self.photoGallary addImagesFromMixArray:self.vm_cell.model_cell.imagesURL];
+    } else {
+        NSLog(@"Attempt to set data. component which is equal nil : self.photoGallary");
     }
 }
 
 
 
+#pragma mark - Calculate height of Cell
+
++ (CGFloat) calculateHeightByUIConfig:(RXUIConfig*) config withVM:(id<RXBaseViewModelCellProtocol>) vm  withSuperViewWidth:(CGFloat)width
+{
+    RXMiddleViewModelCell* convertVM;
+    if ([vm isKindOfClass:[RXMiddleViewModelCell class]]){
+         convertVM = (RXMiddleViewModelCell*)vm;
+    }
+
+    if (convertVM.height_CheckPoint <= 0 || convertVM.actualCalculationsForWidth != width)
+    {
+       convertVM.height_CheckPoint  = [RXMiddleCell cgrectMiddleCellCheckPoint:vm andFrameSuperView:CGRectMake(0, 0, width, 0)].size.height;
+    }
+    
+    if (convertVM.model_cell.instruction.length > 0)
+    {
+        if (convertVM.height_InstructionLabel <= 0 || convertVM.actualCalculationsForWidth != width)
+        {
+            convertVM.height_InstructionLabel = [RXMiddleCell heigtForCellwithString: convertVM.model_cell.instruction
+                                                                     withFont: convertVM.progressBar.configUI.mainLabelFont
+                                                               withWidthLabel:  ((width/100)*vm.progressBar.configUI.widthPercentInstructionAndGallary)-vm.progressBar.configUI.standartOffSetBetweenUIComponents*2].height;
+        }
+    }
+    
+    if (convertVM.model_cell.imagesURL.count > 0)
+    {
+        if (convertVM.height_PhotoGallary <= 0 || convertVM.actualCalculationsForWidth != width)
+        {
+            convertVM.height_PhotoGallary      =  [RXMiddleCell rectForPhotoGallary:CGRectMake(0, 0, width, 0)
+                                                                             withVM:convertVM
+                                                             heightInstructionLabel:convertVM.height_InstructionLabel].size.height;
+        }
+    }
+    
+    float height  = [convertVM getTotalHeightWithOffset:vm.progressBar.configUI.standartOffSetBetweenUIComponents];
+    return height;
+}
+
+#pragma mark - Helpers Calculate method height
+
++(CGSize)heigtForCellwithString:(NSString *)stringValue withFont:(UIFont*)font withWidthLabel:(CGFloat)width{
+    CGFloat offsetHeight = width/17; 
+    CGSize constraint = CGSizeMake(roundf(width),CGFLOAT_MAX);
+    NSDictionary *attributes = @{NSFontAttributeName: font};
+    CGRect rect = [stringValue boundingRectWithSize:constraint
+                                            options:         (NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                         attributes:attributes
+                                            context:nil];
+    return CGSizeMake(roundf(rect.size.width), roundf(rect.size.height+offsetHeight));
+}
+
+#pragma mark - UI Helpers methods
+
+- (void) reloadTabelView
+{
+    UITableView *parentTable = (UITableView *)self.superview;
+    if (![parentTable isKindOfClass:[UITableView class]]) {
+        parentTable = (UITableView *) parentTable.superview;
+    }
+    [parentTable reloadData];
+}
+
+
+#pragma mark - ThridParty Fraemwork method
 #pragma mark - RXLayoutGallaryDelegate
 
 -(void) rxgallaryView:(RXLayoutGallary *)rxlayoutGallary didTapAtImageView:(UIImageView *)imageView sourceObject:(id)sourceImage atIndex:(NSUInteger)index
 {
-    self.imageForNYTPhotosVC = [NSMutableArray new];;
+   self.imageForNYTPhotosVC = [NSMutableArray new];;
     self.numberOfPhotos      = [NSNumber numberWithInteger:rxlayoutGallary.imagesArray.count];
     self.touchedImgView      = imageView;
-    
+   
+    __weak RXMiddleCell* bself = self;
+
     [rxlayoutGallary.imagesArray enumerateObjectsUsingBlock:^(id  _Nonnull imgFromGallary, NSUInteger idx, BOOL * _Nonnull stop) {
         
         RXWrapperNYTPhoto *p = [RXWrapperNYTPhoto new];
@@ -234,16 +363,18 @@
         if ([imgFromGallary isKindOfClass:[FLAnimatedImageView class]])
         {
             FLAnimatedImageView* flaImgView = (FLAnimatedImageView*)imgFromGallary;
-            [self.imageForNYTPhotosVC addObject:({
+                    
+            [bself.imageForNYTPhotosVC addObject:({
                 p.imageData = flaImgView.animatedImage.data;
                 p;
             })];
+            
         } else
             // If the UIImageView object is Lying, then such actions
             if ([imgFromGallary isKindOfClass:[UIImageView class]])
             {
                 UIImageView* imageView = (UIImageView*)imgFromGallary;
-                [self.imageForNYTPhotosVC addObject:({
+                [bself.imageForNYTPhotosVC addObject:({
                     p.image = imageView.image;
                     p;
                 })];
@@ -296,20 +427,23 @@
 
 - (CGRect) rectForInstructionLabel:(CGRect) superViewFrame
 {
+    CGFloat offset = self.vm_cell.progressBar.configUI.standartOffSetBetweenUIComponents;
     CGFloat height =  (self.vm_cell.height_InstructionLabel) ? _vm_cell.height_InstructionLabel : 40.f;
-    CGFloat weight =  ((CGRectGetWidth(superViewFrame)/100)*95)-offset*2;
-    CGFloat x      =  ((CGRectGetWidth(superViewFrame)/100)*5)+offset;
+    CGFloat weight =  ((CGRectGetWidth(superViewFrame)/100)* self.vm_cell.progressBar.configUI.widthPercentInstructionAndGallary)-offset*2;
+    CGFloat x      =  ((CGRectGetWidth(superViewFrame)/100)* (100-self.vm_cell.progressBar.configUI.widthPercentInstructionAndGallary))+offset;
     CGFloat y      =  offset;
     CGRect rect = CGRectMake(roundf(x), roundf(y), roundf(weight), roundf(height));
     return rect;
 }
 
 
-+ (CGRect) rectForPhotoGallary:(CGRect) superViewFrame heightInstructionLabel:(CGFloat) heightInstruction
++ (CGRect) rectForPhotoGallary:(CGRect) superViewFrame withVM:(id<RXBaseViewModelCellProtocol>) vm heightInstructionLabel:(CGFloat) heightInstruction
 {
-    CGFloat weight = ((CGRectGetWidth(superViewFrame)/100)*95)-offset*2;
+    float percent = vm.progressBar.configUI.widthPercentInstructionAndGallary;
+    CGFloat offset = vm.progressBar.configUI.standartOffSetBetweenUIComponents;
+    CGFloat weight = ((CGRectGetWidth(superViewFrame)/100)*percent)-offset*2;
     CGFloat height = roundf(weight/2);
-    CGFloat x      = ((CGRectGetWidth(superViewFrame)/100)*5)+offset;
+    CGFloat x      = ((CGRectGetWidth(superViewFrame)/100)*(100-percent))+offset;
     CGFloat y = 0;
     if (heightInstruction>0)
         y = offset+heightInstruction+offset;
@@ -320,66 +454,32 @@
     return rect;
 }
 
-#pragma mark - Setup UI Components
 
-- (void) setupInstructionLabel
-{
-    if (self.instructionLabel){
-        self.instructionLabel.numberOfLines   = 0;
-        self.instructionLabel.textColor       = [UIColor blackColor];
-#warning fix шрифт из uiconfig
-        self.instructionLabel.font            = [UIFont fontWithName:@"Arial" size:12.0f];
-        self.instructionLabel.backgroundColor = [UIColor blueColor];
-    } else {
-        NSLog(@"Attempt to initialize component which is equal nil : instructionLabel");
-    }
-}
+#pragma mark - Methods for caching image
 
-- (void) setupPhotoGallary
-{
-    if (self.photoGallary){
-        self.photoGallary.backgroundColor = [UIColor yellowColor];
-    } else {
-        NSLog(@"Attempt to initialize component which is equal nil : photoGallary");
-    }
-}
-
-#pragma mark - Set data to UI Components
-
--(void) setDataToInstructionLabel
-{
-    if (self.instructionLabel && self.vm_cell.model_cell.instruction){
-        self.instructionLabel.text = self.vm_cell.model_cell.instruction;
-    } else {
-        NSLog(@"Attempt to set data. component which is equal nil : self.instructionLabel");
-    }
-}
-
--(void) setDataToPhotoGallary
-{
-    if (self.photoGallary && self.vm_cell.model_cell.imagesURL.count > 0){
-        //[self.photoGallary addImageFromURL: self.vm_cell.model_cell.imagesURL];
-        [self.photoGallary addImagesFromMixArray:self.vm_cell.model_cell.imagesURL];
-    } else {
-        NSLog(@"Attempt to set data. component which is equal nil : self.photoGallary");
-    }
-}
-
-
-
--(NSData*) getDataFromCacheByURL:(NSString*) urlStr
-{
+-(NSData*) getDataFromCacheByURL:(NSString*) urlStr {
     return  [self.vm_cell.imageCache objectForKey:urlStr];
 }
--(NSOperationQueue*) getOperationQueue
-{
+
+-(NSOperationQueue*) getOperationQueue {
     return self.vm_cell.imageOperationQueue;
 }
--(void) writeToCacheData:(NSData*) data urlKey:(NSString*) key
-{
+
+#warning изменить название
+- (void) cancelAllRequest {
+    [self.vm_cell.imageOperationQueue setSuspended:YES];
+    [self.vm_cell.imageOperationQueue cancelAllOperations];
+}
+
+-(void) writeToCacheData:(NSData*) data urlKey:(NSString*) key {
     [self.vm_cell.imageCache setObject:data forKey:key];
 }
 
+-(NSArray*) arrayURLSessionTask{
+    return self.vm_cell.arrConnection;
+}
 
-
+-(void) addURLSessionDownTaskToArray:(NSURLSessionDownloadTask*) downloadTask {
+    [self.vm_cell.arrConnection addObject:downloadTask];
+}
 @end
