@@ -92,7 +92,7 @@
     RXProgressBar* firstInstruction = [[RXProgressBar alloc] initWithCollectionPB:  self.pbCollection addAdditionalBeginAndEndCells: YES];
    
     // Select ui style for our RXProgressBar
-    firstInstruction.configUI       = [[RXUIConfig alloc]    initConfigWithStyle: RXProgressBarStyle5];
+    firstInstruction.configUI       = [[RXUIConfig alloc]    initConfigWithStyle: RXProgressBarStyle3];
    
     // Transform (object which conform with protocol "RXInstructionModelProtocol") to -> RXProgressBar's private viewmodel's cells
     NSArray* arrVMFromFirstBar      = [firstInstruction createVMfromModelsArray: dataForFirstInstruction withRefOnImgCache:self.imageCache];
@@ -190,6 +190,8 @@
     if ([cell isMemberOfClass:[UITableViewCell class]]){
         cell.textLabel.text = [NSString stringWithFormat:@"Usually Your cell. IndexPath.row = %ld",(long)indexPath.row];
         cell.contentView.backgroundColor = [UIColor yellowColor];
+        cell.textLabel.backgroundColor = [UIColor yellowColor];
+
     }
 
     // Support RXProgressBar's cells (BeginCell/MiddleCell/EndCell)
