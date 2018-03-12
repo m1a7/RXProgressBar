@@ -33,8 +33,8 @@ s.description      = 'The library is an account Manager with cells. You can tran
   #s.resource_bundle = { s.name => ['RXProgressBar/Classes/RXProgressBar/*'] }
 
 
-   #s.public_header_files = 'Pod/Classes/**/*.h'
-  s.public_header_files =  'RXProgressBar/Classes/*.h'
+   s.public_header_files = 'Pod/Classes/**/*.h'
+   #s.public_header_files =  'RXProgressBar/Classes/*.h'
 
   s.frameworks = 'UIKit' 
   s.dependency 'RXLayoutGallary', '~> 1.1.2'

@@ -30,7 +30,6 @@
                    withSuperViewWidth:(CGFloat)width;
 
 // Cancel all nsoperation
-#warning Исправить название
 - (void) cancelAllRequest;
 
 

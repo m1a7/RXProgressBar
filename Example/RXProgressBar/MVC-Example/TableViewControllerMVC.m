@@ -30,14 +30,13 @@
 #import "DataBuilder.h"
 
 // Thrid-party fraemwork (GIF Animation)
-#import <FLAnimatedImage/FLAnimatedImage.h>
-#import <FLAnimatedImage/FLAnimatedImageView.h>
+//#import <FLAnimatedImage/FLAnimatedImage.h>
+//#import <FLAnimatedImage/FLAnimatedImageView.h>
 
 @interface TableViewControllerMVC ()
 
 @property (nonatomic, strong)  NSMutableArray* dataTableView; // Here store RXProgressBar's viewmodels and own models
 @property (nonatomic, strong)  RXCollectionPB* pbCollection;  // Here store the progressbars aka instruction
-
 @property (nonatomic, strong)  NSCache* imageCache;          // Here store cache images from all progressBar
 
 @end

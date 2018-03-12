@@ -144,7 +144,6 @@
 
 - (void) setInNilAllComponent
 {
-#warning изменить название
     [self cancelAllRequest];
     
     for (UIView* subView in self.contentView.subviews) {
@@ -160,8 +159,7 @@
             [convertSubview removeFromSuperview];
             convertSubview = nil;
         }
-          #warning потом затестить
-        //[self.photoGallary removeAllImageFromGallary];
+
     }
         
     self.instructionLabel = nil;
@@ -465,7 +463,6 @@
     return self.vm_cell.imageOperationQueue;
 }
 
-#warning изменить название
 - (void) cancelAllRequest {
     [self.vm_cell.imageOperationQueue setSuspended:YES];
     [self.vm_cell.imageOperationQueue cancelAllOperations];
