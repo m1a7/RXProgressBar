@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'RXProgress is an iOS (objective-c) implementation of a Web element known as “Progress Bar Step by Step”.'
 
-s.description      = 'The library is an account Manager with cells. You can transfer the data models to the RXProgressBar after that, it will do all the work for you.'
+    s.description      = 'The library is an account Manager with cells. You can transfer the data models to the RXProgressBar after that, it will do all the work for you.'
 
 
 
@@ -33,8 +33,8 @@ s.description      = 'The library is an account Manager with cells. You can tran
   #s.resource_bundle = { s.name => ['RXProgressBar/Classes/RXProgressBar/*'] }
 
 
-   s.public_header_files = 'Pod/Classes/**/*.h'
-   #s.public_header_files =  'RXProgressBar/Classes/*.h'
+   #s.public_header_files = 'Pod/Classes/**/*.h'
+   s.public_header_files =  'RXProgressBar/Classes/*'
 
   s.frameworks = 'UIKit' 
   s.dependency 'RXLayoutGallary', '~> 1.1.2'
