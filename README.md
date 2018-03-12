@@ -31,21 +31,21 @@ In one cell you can insert a field with text and from zero to five photos.
 ![alt text](https://raw.githubusercontent.com/m1a7/RXProgressBar/master/Screens/iphone-demo.gif) | ![alt text](https://raw.githubusercontent.com/m1a7/RXProgressBar/master/Screens/ipad-demo.gif)
 
 # Features
-- [x] Quick integration into your table
-- [x] Ability to insert multiple instruction into a single uitableview at the same time
-- [x] Easy to remove cells or entire instructions
-- [x] 5 standard UI styles + ability to create your own
-- [x] Unlimited UI customization options
-- [x] Dynamic calculations of the height of the cell relative to the text and images
-- [x] Automatic frame layout of all photos in a grid
-- [x] Support for GIF images in the instructions
-- [x] Ability to open a photo in full screen mode
-- [x] Ability to add up to three text descriptions to a photo
-- [x] Supports all orientations (Horizontal / Vertical)
-- [x] Optimized table operation
-- [x] Fast work on older devices starting from ios 8
-- [x] Examples of implementation on MVC and MVVM.
-- [x] Full documentation
+- [x] 🏎️ Quick integration into your table 
+- [x] ✳️ Ability to insert multiple instruction into a single uitableview at the same time
+- [x] 🗑 Easy to remove cells or entire instructions
+- [x] 📊 5 standard UI styles + ability to create your own
+- [x] 🎮 Unlimited UI customization options
+- [x] 🎚 Dynamic calculations of the height of the cell relative to the text and images
+- [x] ⚙️ Automatic frame layout of all photos in a grid
+- [x] 🎞 Support for GIF images in the instructions
+- [x] 🖼 Ability to open a photo in full screen mode
+- [x] 📄 Ability to add up to three text descriptions to a photo
+- [x] ⬆️ ⬇️ Supports all orientations (Horizontal / Vertical)
+- [x] 📈 Optimized table operation
+- [x] 🌋 Fast work on older devices starting from ios 8
+- [x] 📋 Examples of implementation on MVC and MVVM.
+- [x] 📖 Full documentation
 
 
 Also choose from five ui styles, or create your own.
@@ -61,7 +61,7 @@ Also choose from five ui styles, or create your own.
 <br>
 
 
-## Introduction
+## Introduction 🏗
 
 ### Step 1. <br>
 Import next files in your ViewController
@@ -323,7 +323,7 @@ Implement this method -configureCell or add its code to your similar method.
 ```
 <br>
 
-### Step 9.
+### Step 9. ✨✨✨
 You're done ! Now you can start and see how it works. 
 If you encounter errors, open the test project and copy the code from there
 
@@ -340,7 +340,7 @@ If you encounter errors, open the test project and copy the code from there
 
 
 
-## Author
+## Author 👨‍💻 🏊 ✋
 
 m1a7, thisismymail03@gmail.com
 
