@@ -330,12 +330,28 @@ If you encounter errors, open the test project and copy the code from there
 
 <br><br>
 
+## Class diagram
+
+If you have any questions about the library. You can always look at the class diagram
+
+ [Watch class diagram in full resolution]   (https://raw.githubusercontent.com/m1a7/RXProgressBar/master/Documentation/FinalDiagram-Full-Resolution.png)
+
+P.S.
+To build these schemes, I use draw.io
+If you want to modify the scheme. You can take from the folder /Documentation file FinalDiagram.xml and open it with draw.io
+
+ 
+![Short image of class diagram](https://raw.githubusercontent.com/m1a7/RXProgressBar/master/Documentation/FinalDiagram-Short-Resolution.png)
+
+
+
+
 
 ## Things to do in future releases
-- On older devices work with FLAnimatedImage doesn't look impressive. 
-  Idea for next version is to replace the FLAnimatedImage or to another library or to own. 
-- To make a class diagram.
-- Write wiki
+- ❌ On older devices work with FLAnimatedImage doesn't look impressive. 
+     Idea for next version is to replace the FLAnimatedImage or to another library or to own. 
+-  ☑️ To make a class diagram.
+- ❌ Write wiki (in proccess)
 
 
 
